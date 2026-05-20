@@ -1,0 +1,13 @@
+<odoo>
+    <menuitem 
+        id="menu_hello_root" 
+        name="Hello Odoo"
+        action="action_hello_odoo"
+        sequence="10"/>
+    <menuitem 
+        id="menu_hello_messages" 
+        name="Messages" 
+        parent="menu_hello_root" 
+        action="action_hello_odoo"
+        sequence="1"/>
+</odoo>

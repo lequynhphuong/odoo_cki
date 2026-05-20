@@ -1,0 +1,8 @@
+<odoo>
+    <menuitem id="menu_employee_root" name="Quản Lý Nhân Viên" sequence="10"/>
+    <menuitem id="menu_employee_list" 
+    name="Danh Sách Nhân Viên" 
+    parent="menu_employee_root" 
+    action="action_employee_list" 
+    sequence="1"/>
+</odoo>

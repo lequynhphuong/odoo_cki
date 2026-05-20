@@ -1,0 +1,132 @@
+<odoo>
+
+    <record id="view_hospital_doctor_tree" model="ir.ui.view">
+        <field name="name">hospital.doctor.list</field>
+        <field name="model">hospital.doctor</field>
+        <field name="arch" type="xml">
+            <list string="Danh Sách Bác Sĩ">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="birth_date"/>
+                <field name="age"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hospital_doctor_form" model="ir.ui.view">
+        <field name="name">hospital.doctor.form</field>
+        <field name="model">hospital.doctor</field>
+        <field name="arch" type="xml">
+            <form string="Bác Sĩ">
+
+                <header>
+                    <field name="status" widget="statusbar"
+                           statusbar_visible="active,on_leave,inactive"/>
+                    <button name="action_set_on_leave" type="object"
+                            string="Cho nghỉ phép"
+                            invisible="status != 'active'"
+                            class="btn-secondary"/>
+                    <button name="action_set_active" type="object"
+                            string="Quay lại làm việc"
+                            invisible="status != 'on_leave'"
+                            class="btn-primary"/>
+                    <button name="action_set_inactive" type="object"
+                            string="Ngừng làm việc"
+                            invisible="status == 'inactive'"
+                            class="btn-danger"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Tên bác sĩ..."/></h1>
+                    </div>
+
+                    <notebook>
+
+                        <page string="Thông Tin Cá Nhân" name="personal_info">
+                            <group>
+                                <field name="phone"/>
+                                <field name="birth_date"/>
+                                <field name="age" readonly="1"
+                                       invisible="not birth_date"/>
+                            </group>
+                        </page>
+
+                        <page string="Chuyên Môn" name="specialization">
+                            <group>
+                                <field name="specialization"/>
+                            </group>
+                            <separator string="Danh sách bệnh nhân"/>
+                            <field name="patient_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="age"/>
+                                    <field name="disease"/>
+                                </list>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hospital_doctor_kanban" model="ir.ui.view">
+        <field name="name">hospital.doctor.kanban</field>
+        <field name="model">hospital.doctor</field>
+        <field name="arch" type="xml">
+            <kanban string="Bác Sĩ Kanban">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="specialization"/>
+                <field name="status"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content p-2">
+                                <strong style="font-size: 14px;">
+                                    <field name="name"/>
+                                </strong>
+                                <div class="mt-1">
+                                    <span>SĐT: </span>
+                                    <field name="phone"/>
+                                </div>
+                                <div>
+                                    <span>Chuyên môn: </span>
+                                    <field name="specialization"/>
+                                </div>
+                                <div class="mt-1">
+                                    <field name="status" widget="badge"
+                                           decoration-success="status == 'active'"
+                                           decoration-warning="status == 'on_leave'"
+                                           decoration-danger="status == 'inactive'"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_hospital_doctor_list" model="ir.actions.act_window">
+        <field name="name">Danh Sách Bác Sĩ</field>
+        <field name="res_model">hospital.doctor</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="view_id" ref="view_hospital_doctor_tree"/>
+    </record>
+
+    <menuitem id="menu_hospital_patient_root"
+              name="Quản Lý Bệnh Viện" sequence="10"/>
+    <menuitem id="menu_hospital_patient_list"
+              name="Danh Sách Bệnh Nhân"
+              parent="menu_hospital_patient_root"
+              action="action_hospital_patient_list" sequence="1"/>
+    <menuitem id="menu_hospital_doctor_list"
+              name="Danh Sách Bác Sĩ"
+              parent="menu_hospital_patient_root"
+              action="action_hospital_doctor_list" sequence="2"/>
+
+</odoo>

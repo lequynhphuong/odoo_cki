@@ -1,0 +1,31 @@
+<odoo>
+    <record id="view_hello_tree" model="ir.ui.view">
+        <field name="name">hello.odoo.list</field>
+        <field name="model">hello.odoo</field>
+        <field name="arch" type="xml">
+            <list string="Hello Messages">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hello_form" model="ir.ui.view">
+        <field name="name">hello.odoo.form</field>
+        <field name="model">hello.odoo</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hello_odoo" model="ir.actions.act_window">
+        <field name="name">Hello Odoo</field>
+        <field name="res_model">hello.odoo</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
